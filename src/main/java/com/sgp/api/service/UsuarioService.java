@@ -21,6 +21,10 @@ public class UsuarioService {
         return usuarioRepository.findById(id);
     }
 
+    public void excluirUsuario(Long id) {
+        usuarioRepository.deleteById(id);
+    }
+
     @Autowired
     private UsuarioRepository usuarioRepository;
     
