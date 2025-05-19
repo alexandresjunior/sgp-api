@@ -36,6 +36,12 @@ public class UsuarioController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarUsuario(@PathVariable("id") Long id) {
+        Optional<Usuario> usuario = usuarioService.obterDadosUsuarioPeloId(id);
+
+        if (usuario.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        
         usuarioService.excluirUsuario(id);
 
         return ResponseEntity.noContent().build();
