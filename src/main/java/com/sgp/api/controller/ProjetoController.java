@@ -8,23 +8,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sgp.api.model.Projeto;
 import com.sgp.api.service.ProjetoService;
 
 @RestController
+@RequestMapping("/projetos")
 public class ProjetoController {
 
     @Autowired
     private ProjetoService projetoService;
 
-    @GetMapping("/projetos")
+    @GetMapping
     public ResponseEntity<List<Projeto>> listarProjetos() {
         return ResponseEntity.ok().body(projetoService.carregarProjetos());
     }
 
-    @GetMapping("/projetos/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Optional<Projeto>> buscarProjeto(@PathVariable("id") Long id) {
         Optional<Projeto> projeto = projetoService.carregarDadosProjetoPeloId(id);
 
@@ -35,7 +37,7 @@ public class ProjetoController {
         return ResponseEntity.ok().body(projeto);
     }
 
-    @DeleteMapping("/projetos/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluirProjeto(@PathVariable("id") Long id) {
         Optional<Projeto> projeto = projetoService.carregarDadosProjetoPeloId(id);
 
