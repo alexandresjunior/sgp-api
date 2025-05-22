@@ -25,6 +25,10 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
+    public Usuario salvarUsuario(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
+
     @Autowired
     private UsuarioRepository usuarioRepository;
     
