@@ -1,7 +1,7 @@
 package com.sgp.api.controller;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sgp.api.dto.UsuarioDTO;
 import com.sgp.api.model.Usuario;
 import com.sgp.api.service.UsuarioService;
 
@@ -23,15 +24,15 @@ import com.sgp.api.service.UsuarioService;
 public class UsuarioController {
 
     @GetMapping
-    public ResponseEntity<List<Usuario>> listarUsuarios() {
+    public ResponseEntity<List<UsuarioDTO>> listarUsuarios() {
         return ResponseEntity.ok().body(usuarioService.carregarUsuariosCadastrados());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Usuario>> buscarUsuarioPeloId(@PathVariable("id") Long id) {
-        Optional<Usuario> usuario = usuarioService.obterDadosUsuarioPeloId(id);
+    public ResponseEntity<UsuarioDTO> buscarUsuarioPeloId(@PathVariable("id") Long id) {
+        UsuarioDTO usuario = usuarioService.obterDadosUsuarioPeloId(id);
 
-        if (usuario.isEmpty()) {
+        if (Objects.isNull(usuario)) {
             return ResponseEntity.notFound().build();
         }
 
@@ -40,9 +41,9 @@ public class UsuarioController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarUsuario(@PathVariable("id") Long id) {
-        Optional<Usuario> usuario = usuarioService.obterDadosUsuarioPeloId(id);
+        UsuarioDTO usuario = usuarioService.obterDadosUsuarioPeloId(id);
 
-        if (usuario.isEmpty()) {
+        if (Objects.isNull(usuario)) {
             return ResponseEntity.notFound().build();
         }
         
@@ -59,9 +60,9 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> atualizarUsuario(@PathVariable("id") Long id, @RequestBody Usuario dadosUsuario) {
-        Optional<Usuario> usuario = usuarioService.obterDadosUsuarioPeloId(id);
+        UsuarioDTO usuario = usuarioService.obterDadosUsuarioPeloId(id);
 
-        if (usuario.isEmpty()) {
+        if (Objects.isNull(usuario)) {
             return ResponseEntity.notFound().build();
         }
 
